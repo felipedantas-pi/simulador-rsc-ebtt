@@ -1,51 +1,101 @@
-# Calculadora RSC
+# Simulador RSC (EBTT)
 
-Página estática (HTML/CSS/JS puro, sem backend) que replica os cálculos da `Planilha_RSC.xlsx` para apuração de pontuação do Reconhecimento de Saberes e Competências (RSC I, II e III).
+> **Ferramenta NÃO OFICIAL.** Estima a pontuação do Reconhecimento de Saberes e Competências (RSC I, II e III) de docentes da carreira EBTT. **Não substitui** a análise da CPPD nem a normativa vigente da sua instituição. O resultado é apenas uma simulação.
 
-## Arquivos
+**Acesse online:** `https://felipedantas-pi.github.io/simulador-rsc-ebtt/`
 
-- `index.html` — estrutura da página
-- `styles.css` — visual responsivo
-- `data.js` — todas as diretrizes, itens, fatores de pontuação, unidades e tetos, extraídos das abas `RSC_I`, `RSC_II`, `RSC_III` e `Anexo_III` da planilha
-- `app.js` — motor de cálculo (fórmulas replicadas) + renderização + persistência local
+## Para que serve
 
-## Fórmulas replicadas
+Você informa as quantidades de cada atividade (cursos, projetos, orientações, produções etc.) e o simulador calcula, automaticamente:
 
-- Pontuação do item = `fator × quantidade informada`
-- Subtotal do grupo = soma dos itens do grupo
-- Pontuação obtida do grupo = `peso × subtotal` (peso e teto vêm do `Anexo_III`)
-- Pontuação válida do grupo = `MIN(obtida, teto)`
-- Subtotal do nível (RSC I/II/III) = soma das pontuações válidas dos grupos (máx. 100)
-- Total geral = soma dos 3 níveis (máx. 300)
+- a pontuação de cada item, de cada grupo e de cada nível (RSC I, II e III);
+- o total geral;
+- se a pontuação atinge o mínimo exigido para o RSC que você pretende pleitear.
 
-Motor validado numericamente contra os totais já preenchidos na planilha original (RSC I = 39,6 · RSC II = 28 · RSC III = 0 · Total = 67,6) — bateram exatos.
+Os itens, fatores de pontuação, unidades máximas e tetos seguem a planilha institucional de apuração do IFPI.
 
-## Observação importante
+## Como usar (no site)
 
-Na planilha original, a grade de status "OK / NÃO_OK" (aba `Apuração da Pontuação`, células O15:Q17) **não é calculada por fórmula** — são valores digitados manualmente. O banner de situação desta página oferece duas regras (seletor "Regra de aprovação"), ambas no formato *mínimo no nível pretendido + mínimo no total geral* (o excedente do nível pretendido conta no total):
+1. Abra o endereço acima, no computador ou no celular.
+2. (Opcional) Preencha seus dados no topo. Eles servem só para impressão.
+3. Marque o **RSC que pretende pleitear** (I, II ou III).
+4. Escolha a **regra de aprovação**:
+   - **Manual IFPI (SUAP):** mínimo de 25 pontos no RSC pretendido e 50 pontos no total (padrão);
+   - **Resolução CPRSC nº 03/2021:** mínimo de 36 pontos no RSC pretendido e 60 pontos no total.
+5. Navegue pelas abas **RSC I**, **RSC II** e **RSC III**, abra cada grupo e digite as quantidades. O limite de unidades de cada item é aplicado automaticamente.
+6. Na aba **Resumo**, veja a pontuação por grupo e nível, e o banner de situação (suficiente ou insuficiente, com quantos pontos faltam).
+7. Use **Imprimir / PDF** para guardar o resultado e **Limpar quantidades** para recomeçar.
 
-- **Resolução CPRSC nº 03/2021, art. 9º, parágrafo único** (redação da Res. CPRSC nº 8/2022): 60% da pontuação do nível = **60 pts no total** e 60% desses = **36 pts no nível pretendido**.
-- **Manual de Solicitação do RSC do IFPI (SUAP)** (padrão, igual à planilha institucional): **25 pts no RSC pretendido** e **50 pts na pontuação global**.
+Seus dados ficam salvos **apenas no seu navegador** (`localStorage`). Nada é enviado a servidor. Limpar os dados do navegador apaga o que foi digitado.
 
-Os valores estão em `REGRAS` no `app.js`. O manual do IFPI é anterior à Res. 3/2021 e cita a Res. 15/2014-CONSUP/IFPI; confirme com a CPPD qual regulamento institucional está em vigor (Res. 3/2021, art. 17: regulamentos vigentes valem até a homologação do novo).
+## Como funciona o cálculo
 
-Também pelo art. 7º da Res. 3/2021, as atividades devem ter sido realizadas em, no máximo, 5 anos antes do ingresso na Carreira EBTT (a calculadora não valida datas).
+- Pontos do item = `fator × quantidade` (limitada ao máximo de unidades do item).
+- Subtotal do grupo = soma dos itens do grupo.
+- Pontos obtidos = `peso do grupo × subtotal`.
+- Pontos válidos = `MIN(obtidos, teto do grupo)`.
+- Pontuação do nível = soma dos pontos válidos dos grupos (máximo de 100 por nível).
+- Total geral = soma dos três níveis.
+- Situação = pontuação do nível pretendido ≥ mínimo do nível **e** total geral ≥ mínimo do total. O excedente do nível pretendido conta no total.
 
-## Rodar localmente
+Os cálculos foram conferidos contra os totais da planilha original.
 
-Abra `index.html` direto no navegador (duplo clique) — não precisa de servidor.
+## Usar localmente (sem internet)
 
-## Publicar no GitHub Pages
+Não precisa instalar nada, só de um navegador.
+
+**Opção A: baixar o ZIP (mais simples)**
+
+1. Na página do repositório no GitHub, clique em **Code** e depois em **Download ZIP**.
+2. Extraia o arquivo em uma pasta.
+3. Dê duplo clique em `index.html`. O simulador abre no navegador.
+
+**Opção B: clonar com Git**
 
 ```bash
-git init
-git add index.html styles.css app.js data.js README.md
-git commit -m "feat: calculadora RSC"
-git branch -M main
-git remote add origin <URL_DO_SEU_REPOSITORIO>
-git push -u origin main
+git clone https://github.com/SEU_USUARIO/simulador-rsc-ebtt.git
+```
+```bash
+cd simulador-rsc-ebtt
 ```
 
-Depois, no GitHub: **Settings → Pages → Source: Deploy from a branch → main / (root)**.
+Depois, abra o `index.html` no navegador.
 
-A planilha original (`Planilha_RSC.xlsx`) contém dados pessoais preenchidos (nome, SIAPE) — **não a suba para um repositório público**.
+**Servidor local (opcional)**
+
+Se preferir abrir por endereço local, com Python instalado:
+```bash
+python -m http.server 8000
+```
+Acesse `http://localhost:8000`.
+
+## Estrutura
+
+```
+index.html    página
+styles.css    visual (responsivo e impressão)
+data.js       itens, fatores, unidades máximas e tetos (extraídos da planilha)
+app.js        motor de cálculo, interface e persistência local
+```
+
+## Atualizar regras ou itens
+
+- **Itens, fatores e tetos:** edite `data.js`.
+- **Mínimos de aprovação:** edite o objeto `REGRAS` no início do `app.js`.
+
+## Aviso importante
+
+- A pontuação final é definida pela **CPPD** e pela normativa vigente da instituição.
+- O IF ainda pode utilizar a regra 25/50 ou migrar para 36/60 (Res. CPRSC nº 03/2021, art. 9º). Confirme com sua CPPD qual se aplica.
+- A Res. CPRSC nº 03/2021 (art. 7º) limita as atividades a, no máximo, 5 anos antes do ingresso na carreira EBTT. O simulador **não valida datas**.
+- A calculadora não avalia documentos comprobatórios. Eles precisam atender às exigências do processo no SUAP.
+
+## Fontes
+
+- Planilha institucional de apuração da pontuação do RSC (IFPI).
+- Resolução CPRSC nº 3/2021 e Resolução CPRSC nº 8/2022.
+- Manual de Solicitação do RSC do IFPI (SUAP).
+
+## Licença
+
+Defina uma licença (por exemplo, MIT) antes de publicar, se quiser permitir reuso.
