@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculadora RSC — Reconhecimento de Saberes e Competências</title>
+  <meta name="description" content="Calculadora de pontuação RSC I, II e III para docentes da Rede Federal de Educação Profissional e Tecnológica.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <div>
+        <h1>Calculadora RSC</h1>
+        <p>Reconhecimento de Saberes e Competências — níveis I, II e III</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost" id="btn-print">Imprimir / PDF</button>
+        <button class="btn btn-ghost" id="btn-clear">Limpar quantidades</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="info-card">
+      <h2>Dados do docente (opcional — fica salvo só no seu navegador)</h2>
+      <div class="info-grid">
+        <div class="field">
+          <label for="docente-nome">Nome</label>
+          <input type="text" id="docente-nome" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="docente-siape">SIAPE</label>
+          <input type="text" id="docente-siape" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="docente-campus">Campus de lotação</label>
+          <input type="text" id="docente-campus" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="docente-titulacao">Titulação</label>
+          <input type="text" id="docente-titulacao" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="docente-processo">Número do processo</label>
+          <input type="text" id="docente-processo" autocomplete="off">
+        </div>
+      </div>
+    </section>
+
+    <section class="info-card" id="pretendido-card">
+      <h2>Qual RSC você pretende pleitear?</h2>
+      <div class="rsc-choice" id="rsc-choice">
+        <label class="choice-opt">
+          <input type="checkbox" name="rsc-pretendido" value="I">
+          <span class="choice-box"><strong>RSC I</strong><small>Pleitear RSC I</small></span>
+        </label>
+        <label class="choice-opt">
+          <input type="checkbox" name="rsc-pretendido" value="II">
+          <span class="choice-box"><strong>RSC II</strong><small>Pleitear RSC II</small></span>
+        </label>
+        <label class="choice-opt">
+          <input type="checkbox" name="rsc-pretendido" value="III">
+          <span class="choice-box"><strong>RSC III</strong><small>Pleitear RSC III</small></span>
+        </label>
+      </div>
+      <div class="field rule-field">
+        <label for="rsc-regra">Regra de aprovação</label>
+        <select id="rsc-regra">
+          <option value="ifpi">Manual IFPI (SUAP) — 25 pts no nível + 50 pts no total</option>
+          <option value="cprsc">Resolução CPRSC nº 03/2021 — 36 pts no nível + 60 pts no total</option>
+        </select>
+      </div>
+    </section>
+
+    <nav class="tabs" id="tabs"></nav>
+    <div id="panels">
+      <div class="tab-panel" id="panel-resumo"></div>
+    </div>
+  </main>
+
+  <footer>
+    Ferramenta não oficial baseada na planilha institucional de apuração de pontuação RSC. Confira sempre a normativa vigente do seu Instituto Federal antes de protocolar o processo.
+  </footer>
+
+  <div id="toast"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
